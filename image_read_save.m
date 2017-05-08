@@ -2,7 +2,6 @@ function image_read_save
 
 panelColor=get(0,'DefaultUicontrolBackgroundColor');
 
-%其中HandleVisibility属性指定的是对象的句柄可以被怎么调用
     function readFileFcn(src,evt)
         [fname,dirpath]=uigetfile({'*.jpeg';'*.bmp';'*.png'});
         file=[dirpath fname];
@@ -15,7 +14,8 @@ panelColor=get(0,'DefaultUicontrolBackgroundColor');
             imshow(file);
         end
     end
-
+%对于打开文件使用fopen，但是fopen一般都是默认以二进制的模式打开的，所以如果需要以文本模式打开，则需要加上t，如下面的wt
+%然后将数组或是其他的保存到文件中则使用fprintf。文件用完后需要使用fclose进行关闭
     function saveToFileFcn(src,evt)
          [fname,dirpath]=uigetfile({'*.txt'});
          file=[dirpath fname];
@@ -42,6 +42,7 @@ panelColor=get(0,'DefaultUicontrolBackgroundColor');
          fprintf(fid,'%d',data1);
          fclose(fid);
     end
+%其中HandleVisibility属性指定的是对象的句柄可以被怎么调用
 f=figure('Units','characters',...
     'Position',[30 30 120 36],...
     'Color',panelColor,...
